@@ -6,6 +6,10 @@ in {
   options.services.startx = {
     enable = mkEnableOption "Enable startx as a service.";
     user = mkOption { type = types.str; };
+    restart = mkOption {
+      type = types.str;
+      default = "never";
+    };
     tty = mkOption {
       type = types.str;
       default = "tty1";
@@ -22,7 +26,7 @@ in {
       serviceConfig = {
         ExecStart = "${pkgs.xorg.xinit}/bin/startx -- -keeptty -verbose 3";
         PAMName = "login";
-        Restart = "always";
+        Restart = "${cfg.restart}";
         RestartSec = "3";
         StandardInput = "tty";
         StandardOutput = "journal";
