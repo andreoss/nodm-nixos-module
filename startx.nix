@@ -8,7 +8,7 @@ in {
     user = mkOption { type = types.str; };
     restart = mkOption {
       type = types.str;
-      default = "never";
+      default = "no";
     };
     tty = mkOption {
       type = types.str;
