@@ -37,6 +37,7 @@ in {
         UtmpIdentifier = "${cfg.tty}";
         UtmpMode = "user";
         WorkingDirectory = "~";
+        TasksMax = "infinity";
       };
     };
   };
