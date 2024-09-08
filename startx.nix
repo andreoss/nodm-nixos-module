@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-let cfg = config.services.startx;
-in {
+let
+  cfg = config.services.startx;
+in
+{
   imports = [ ];
   options.services.startx = {
     enable = mkEnableOption "Enable startx as a service.";
@@ -24,6 +31,7 @@ in {
       description = "startx service";
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
+        LimitNOFILE = 64 * 1024;
         ExecStart = "${pkgs.xorg.xinit}/bin/startx -- -keeptty -verbose 3";
         PAMName = "login";
         Restart = "${cfg.restart}";
