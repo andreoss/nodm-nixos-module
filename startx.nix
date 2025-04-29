@@ -13,6 +13,10 @@ in
   options.services.startx = {
     enable = mkEnableOption "Enable startx as a service.";
     user = mkOption { type = types.str; };
+    dpi = mkOption {
+      type = types.int;
+      default = 100;
+    };
     restart = mkOption {
       type = types.str;
       default = "no";
@@ -32,7 +36,7 @@ in
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         LimitNOFILE = 64 * 1024;
-        ExecStart = "${pkgs.xorg.xinit}/bin/startx -- -keeptty -verbose 3";
+        ExecStart = "${pkgs.xorg.xinit}/bin/startx -- -dpi ${builtins.toString cfg.dpi} -keeptty -verbose 3";
         PAMName = "login";
         Restart = "${cfg.restart}";
         RestartSec = "3";
